@@ -47,7 +47,7 @@ if f'GPU {dt}.db' not in os.listdir():
     con.close()
 
 # And for each model separately
-models = ["710","730","1030","1050","1660","2060","3060","6700", "3070","3080","6900","3090"]
+models = ["710","730","1030","1050 Ti","1660","1660 Ti","1660 SUPER","2060","3060","6700 XT","3070","3070 Ti","3080","3080 Ti","6800 XT","6900 XT","3090"]
 
 obj = {}
 for i in models:
@@ -56,7 +56,8 @@ for i in models:
 for key, value in obj.items():
     con = sqlite3.connect(f"{key}.db")
     c = con.cursor()
-    # key = key.lstrip("results")
+    if " " in key:
+        key = key.replace(" ", "_")
     c.execute(f"CREATE TABLE {key} (GPU, price)")
 
     c.executemany(f"INSERT INTO {key} VALUES (?,?)", value)
