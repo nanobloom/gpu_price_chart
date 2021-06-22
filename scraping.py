@@ -65,6 +65,22 @@ for key, value in obj.items():
     con.commit()
     con.close()
 
+# Deleting Ti & SUPER models from databases of regular models
+dbs = {
+    "1660": "results1660",
+    "3070": "results3070",
+    "3080": "results3080"
+}
+
+for i, j in dbs.items():
+    con = sqlite3.connect(f"{j}.db")
+    c = con.cursor()
+
+    c.execute(f"DELETE FROM {j} WHERE GPU LIKE '%{i} SUPER%' OR GPU LIKE '%{i} Ti%'")
+
+    con.commit()
+    con.close()
+
 
 
 
